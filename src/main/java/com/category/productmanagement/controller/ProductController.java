@@ -12,8 +12,11 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("/products")
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public List<Product> getAllProducts(
+            @RequestParam(value = "pageNumber",defaultValue = "1",required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "2",required = false) Integer pageSize
+    ){
+        return productService.getAllProducts(pageNumber,pageSize);
     }
     @PostMapping("/products")
     public Product addProduct(@RequestBody Product product){

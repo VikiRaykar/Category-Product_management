@@ -3,6 +3,9 @@ package com.category.productmanagement.service;
 import com.category.productmanagement.pojo.Product;
 import com.category.productmanagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +14,11 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     ProductRepository productRepository;
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(Integer pageNumber,Integer pageSize ) {
+        Pageable pageable= PageRequest.of(pageNumber,pageSize);
+        Page<Product> pageProduct=productRepository.findAll(pageable);
+        List<Product> content=pageProduct.getContent();
+        return content;
     }
 
     @Override
